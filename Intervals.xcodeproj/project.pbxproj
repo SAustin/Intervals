@@ -13,6 +13,9 @@
 		6167FBB51C40B9D100A4B341 /* Intervals.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6167FBB31C40B9D100A4B341 /* Intervals.xcdatamodeld */; };
 		6167FBB71C40B9D100A4B341 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6167FBB61C40B9D100A4B341 /* Assets.xcassets */; };
 		6167FBBA1C40B9D100A4B341 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6167FBB81C40B9D100A4B341 /* LaunchScreen.storyboard */; };
+		61A269151C604ECE0010ADBD /* pauseButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 61A269121C604ECE0010ADBD /* pauseButton.png */; };
+		61A269161C604ECE0010ADBD /* resetButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 61A269131C604ECE0010ADBD /* resetButton.png */; };
+		61A269171C604ECE0010ADBD /* startButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 61A269141C604ECE0010ADBD /* startButton.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		6167FBB61C40B9D100A4B341 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6167FBB91C40B9D100A4B341 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6167FBBB1C40B9D100A4B341 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		61A269121C604ECE0010ADBD /* pauseButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pauseButton.png; sourceTree = "<group>"; };
+		61A269131C604ECE0010ADBD /* resetButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resetButton.png; sourceTree = "<group>"; };
+		61A269141C604ECE0010ADBD /* startButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = startButton.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +62,7 @@
 		6167FBAB1C40B9D100A4B341 /* Intervals */ = {
 			isa = PBXGroup;
 			children = (
+				61A269111C604E980010ADBD /* Images */,
 				6167FBAC1C40B9D100A4B341 /* AppDelegate.swift */,
 				6167FBAE1C40B9D100A4B341 /* ViewController.swift */,
 				6167FBB01C40B9D100A4B341 /* Main.storyboard */,
@@ -65,6 +72,16 @@
 				6167FBB31C40B9D100A4B341 /* Intervals.xcdatamodeld */,
 			);
 			path = Intervals;
+			sourceTree = "<group>";
+		};
+		61A269111C604E980010ADBD /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				61A269121C604ECE0010ADBD /* pauseButton.png */,
+				61A269131C604ECE0010ADBD /* resetButton.png */,
+				61A269141C604ECE0010ADBD /* startButton.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,6 +142,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61A269151C604ECE0010ADBD /* pauseButton.png in Resources */,
+				61A269161C604ECE0010ADBD /* resetButton.png in Resources */,
+				61A269171C604ECE0010ADBD /* startButton.png in Resources */,
 				6167FBBA1C40B9D100A4B341 /* LaunchScreen.storyboard in Resources */,
 				6167FBB71C40B9D100A4B341 /* Assets.xcassets in Resources */,
 				6167FBB21C40B9D100A4B341 /* Main.storyboard in Resources */,
@@ -290,6 +310,7 @@
 				6167FBC01C40B9D100A4B341 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
