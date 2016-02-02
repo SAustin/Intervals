@@ -16,6 +16,9 @@
 		61A269151C604ECE0010ADBD /* pauseButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 61A269121C604ECE0010ADBD /* pauseButton.png */; };
 		61A269161C604ECE0010ADBD /* resetButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 61A269131C604ECE0010ADBD /* resetButton.png */; };
 		61A269171C604ECE0010ADBD /* startButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 61A269141C604ECE0010ADBD /* startButton.png */; };
+		61A2691A1C60515F0010ADBD /* TimerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A269191C60515F0010ADBD /* TimerLabel.swift */; };
+		61A2691C1C6052380010ADBD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A2691B1C6052380010ADBD /* Constants.swift */; };
+		61A2691F1C6055C30010ADBD /* beep-07.wav in Resources */ = {isa = PBXBuildFile; fileRef = 61A2691E1C6055C30010ADBD /* beep-07.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		61A269121C604ECE0010ADBD /* pauseButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pauseButton.png; sourceTree = "<group>"; };
 		61A269131C604ECE0010ADBD /* resetButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resetButton.png; sourceTree = "<group>"; };
 		61A269141C604ECE0010ADBD /* startButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = startButton.png; sourceTree = "<group>"; };
+		61A269191C60515F0010ADBD /* TimerLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerLabel.swift; sourceTree = "<group>"; };
+		61A2691B1C6052380010ADBD /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		61A2691E1C6055C30010ADBD /* beep-07.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "beep-07.wav"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +68,8 @@
 		6167FBAB1C40B9D100A4B341 /* Intervals */ = {
 			isa = PBXGroup;
 			children = (
+				61A2691D1C6055AF0010ADBD /* Sounds */,
+				61A269181C60514D0010ADBD /* Timer */,
 				61A269111C604E980010ADBD /* Images */,
 				6167FBAC1C40B9D100A4B341 /* AppDelegate.swift */,
 				6167FBAE1C40B9D100A4B341 /* ViewController.swift */,
@@ -80,8 +88,25 @@
 				61A269121C604ECE0010ADBD /* pauseButton.png */,
 				61A269131C604ECE0010ADBD /* resetButton.png */,
 				61A269141C604ECE0010ADBD /* startButton.png */,
+				61A2691B1C6052380010ADBD /* Constants.swift */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		61A269181C60514D0010ADBD /* Timer */ = {
+			isa = PBXGroup;
+			children = (
+				61A269191C60515F0010ADBD /* TimerLabel.swift */,
+			);
+			name = Timer;
+			sourceTree = "<group>";
+		};
+		61A2691D1C6055AF0010ADBD /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				61A2691E1C6055C30010ADBD /* beep-07.wav */,
+			);
+			name = Sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -144,6 +169,7 @@
 			files = (
 				61A269151C604ECE0010ADBD /* pauseButton.png in Resources */,
 				61A269161C604ECE0010ADBD /* resetButton.png in Resources */,
+				61A2691F1C6055C30010ADBD /* beep-07.wav in Resources */,
 				61A269171C604ECE0010ADBD /* startButton.png in Resources */,
 				6167FBBA1C40B9D100A4B341 /* LaunchScreen.storyboard in Resources */,
 				6167FBB71C40B9D100A4B341 /* Assets.xcassets in Resources */,
@@ -158,6 +184,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61A2691C1C6052380010ADBD /* Constants.swift in Sources */,
+				61A2691A1C60515F0010ADBD /* TimerLabel.swift in Sources */,
 				6167FBAF1C40B9D100A4B341 /* ViewController.swift in Sources */,
 				6167FBAD1C40B9D100A4B341 /* AppDelegate.swift in Sources */,
 				6167FBB51C40B9D100A4B341 /* Intervals.xcdatamodeld in Sources */,
