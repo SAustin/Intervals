@@ -34,8 +34,8 @@ class ViewController: UIViewController, TimerLabelDelegate
     @IBOutlet var userInputGroup: UIStackView?
     @IBOutlet var timerGroup: UIStackView?
     
-    var userRunTime = kDefaultRunTime
-    var userWalkTime = kDefaultWalkTime
+    var userRunTime: NSTimeInterval = kDefaultRunTime
+    var userWalkTime: NSTimeInterval = kDefaultWalkTime
 
     var overallTimer: TimerLabel?
     var runTimer: TimerLabel?
@@ -240,13 +240,13 @@ class ViewController: UIViewController, TimerLabelDelegate
     //MARK: - UITextFields
     @IBAction func runTimeWasUpdated(sender: UITextField)
     {
-        self.userRunTime = NSTimeInterval((sender.text! as NSString).integerValue * 60)
+        self.userRunTime = NSTimeInterval((sender.text! as NSString).doubleValue * 60)
         self.runTimer?.setCountDownTime(self.userRunTime)
     }
     
     @IBAction func walkTimeWasUpdated(sender: UITextField)
     {
-        self.userWalkTime = NSTimeInterval((sender.text! as NSString).integerValue * 60)
+        self.userWalkTime = NSTimeInterval((sender.text! as NSString).doubleValue * 60)
         self.walkTimer?.setCountDownTime(self.userWalkTime)
     }
     
