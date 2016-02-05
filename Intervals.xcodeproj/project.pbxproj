@@ -73,6 +73,7 @@
 				61A269111C604E980010ADBD /* Images */,
 				6167FBAC1C40B9D100A4B341 /* AppDelegate.swift */,
 				6167FBAE1C40B9D100A4B341 /* ViewController.swift */,
+				61A2691B1C6052380010ADBD /* Constants.swift */,
 				6167FBB01C40B9D100A4B341 /* Main.storyboard */,
 				6167FBB61C40B9D100A4B341 /* Assets.xcassets */,
 				6167FBB81C40B9D100A4B341 /* LaunchScreen.storyboard */,
@@ -88,7 +89,6 @@
 				61A269121C604ECE0010ADBD /* pauseButton.png */,
 				61A269131C604ECE0010ADBD /* resetButton.png */,
 				61A269141C604ECE0010ADBD /* startButton.png */,
-				61A2691B1C6052380010ADBD /* Constants.swift */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -141,6 +141,7 @@
 				TargetAttributes = {
 					6167FBA81C40B9D100A4B341 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = YMJJF4LH5P;
 					};
 				};
 			};
@@ -301,6 +302,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Intervals/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.europaSoftware.Intervals;
@@ -312,6 +314,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				INFOPLIST_FILE = Intervals/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.europaSoftware.Intervals;

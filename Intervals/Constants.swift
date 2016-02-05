@@ -11,6 +11,11 @@ import Foundation
 let kDefaultRunTime: NSTimeInterval = 120
 let kDefaultWalkTime: NSTimeInterval = 60
 
+let kRunIntervalName = "RunInterval"
+let kWalkIntervalName = "WalkInterval"
+let kStartTime = "IntervalStartTime"
+let kBackgroundAlert = "GoingToBackground"
+
 /*
 * Delay
 * Runs x code after a delay
