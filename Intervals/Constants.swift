@@ -15,6 +15,8 @@ let kRunIntervalName = "RunInterval"
 let kWalkIntervalName = "WalkInterval"
 let kStartTime = "IntervalStartTime"
 let kBackgroundAlert = "GoingToBackground"
+let kLocalWalkNotificationRecieved = "LocalWalkNotification"
+let kLocalRunNotificationRecieved = "LocalRunNotification"
 
 /*
 * Delay

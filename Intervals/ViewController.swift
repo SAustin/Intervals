@@ -12,10 +12,11 @@
 //TODO: Partner watch app
 
 import UIKit
+import AVFoundation
+import AudioToolbox
 
 class ViewController: UIViewController, TimerLabelDelegate
 {
-
     var startTime: NSDate?
     var totalTime = 25200
     var runInterval = 180.0
@@ -41,6 +42,7 @@ class ViewController: UIViewController, TimerLabelDelegate
     var runTimer: TimerLabel?
     var walkTimer: TimerLabel?
     
+    var soundPlayer: AVAudioPlayer?
     
     override func viewDidLoad()
     {
@@ -50,6 +52,11 @@ class ViewController: UIViewController, TimerLabelDelegate
         // Do any additional setup after loading the view, typically from a nib.
         
         var timeDifference: NSTimeInterval
+        
+        let soundPath = NSBundle.mainBundle().pathForResource("beep-07", ofType: "wav")
+        try! self.soundPlayer = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: soundPath!))
+        self.soundPlayer!.prepareToPlay()
+
         
         //If this exists, the app went to sleep while we were in a run. I think.
         if let startTime = NSUserDefaults.standardUserDefaults().valueForKey(kStartTime) as? NSDate
@@ -112,7 +119,7 @@ class ViewController: UIViewController, TimerLabelDelegate
             self.walkTimer?.setCountDownTime(self.userWalkTime)
             
             self.overallTimer = TimerLabel(label: self.overallLabel, timerType: .Stopwatch)
-            self.overallTimer?.timeFormat = "hh:mm:ss"
+//            self.overallTimer?.timeFormat = "hh:mm:ss"
             self.overallTimer?.timerDelegate = self
             
             self.resetButton?.hidden = true
@@ -121,6 +128,8 @@ class ViewController: UIViewController, TimerLabelDelegate
         }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "scheduleAllNotifications", name: kBackgroundAlert, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didRecieveRunNotification", name: kLocalRunNotificationRecieved, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didRecieveWalkNotification", name: kLocalWalkNotificationRecieved, object: nil)
 
     }
 
@@ -128,6 +137,17 @@ class ViewController: UIViewController, TimerLabelDelegate
     {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func didRecieveRunNotification()
+    {
+        
+        self.playBeeps(2)
+    }
+    
+    func didRecieveWalkNotification()
+    {
+        self.playBeeps(1)
     }
     
     @IBAction func startWasPressed()
@@ -201,9 +221,9 @@ class ViewController: UIViewController, TimerLabelDelegate
         
         for _ in 0...64
         {
-            self.scheduleNotifications(timeFromNow, runReminder: self.currentlyRunning)
-            timeFromNow += self.currentlyRunning ? self.userWalkTime : self.userRunTime
             self.scheduleNotifications(timeFromNow, runReminder: !self.currentlyRunning)
+            timeFromNow += self.currentlyRunning ? self.userWalkTime : self.userRunTime
+            self.scheduleNotifications(timeFromNow, runReminder: self.currentlyRunning)
             timeFromNow += self.currentlyRunning ? self.userRunTime : self.userWalkTime
         }
     }
@@ -301,6 +321,18 @@ class ViewController: UIViewController, TimerLabelDelegate
     {
         self.walkUserInputTextField?.resignFirstResponder()
         self.runUserInputTextField?.resignFirstResponder()
+    }
+    
+    func playBeeps(numberOfBeeps: Int)
+    {
+        for index in 0...numberOfBeeps - 1
+        {
+            delay(Double(index)*0.2)
+                {
+                    self.soundPlayer?.play()
+                    return
+            }
+        }
     }
 
     
