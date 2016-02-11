@@ -31,9 +31,13 @@ class ViewController: UIViewController, TimerLabelDelegate
     
     @IBOutlet var runUserInputTextField: UITextField?
     @IBOutlet var walkUserInputTextField: UITextField?
+    @IBOutlet var runInputMinuteLabel: UILabel?
+    @IBOutlet var walkInputMinuteLabel: UILabel?
     
     @IBOutlet var userInputGroup: UIStackView?
     @IBOutlet var timerGroup: UIStackView?
+    
+    @IBOutlet var mainStackView: UIStackView?
     
     var userRunTime: NSTimeInterval = kDefaultRunTime
     var userWalkTime: NSTimeInterval = kDefaultWalkTime
@@ -102,7 +106,7 @@ class ViewController: UIViewController, TimerLabelDelegate
                     self.walkTimer?.start()
                 }
                 self.overallTimer?.start()
-                self.startButton?.setBackgroundImage(UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pauseButton", ofType: "png")!), forState: .Normal)
+                self.startButton?.setImage(UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pauseButton", ofType: "png")!), forState: .Normal)
 
             }
         }
@@ -119,12 +123,9 @@ class ViewController: UIViewController, TimerLabelDelegate
             self.walkTimer?.setCountDownTime(self.userWalkTime)
             
             self.overallTimer = TimerLabel(label: self.overallLabel, timerType: .Stopwatch)
-//            self.overallTimer?.timeFormat = "hh:mm:ss"
             self.overallTimer?.timerDelegate = self
             
-            self.resetButton?.hidden = true
-            
-            self.timerGroup?.hidden = true
+            self.hideTimers()
         }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "scheduleAllNotifications", name: kBackgroundAlert, object: nil)
@@ -140,8 +141,7 @@ class ViewController: UIViewController, TimerLabelDelegate
     }
     
     func didRecieveRunNotification()
-    {
-        
+    {   
         self.playBeeps(2)
     }
     
@@ -159,16 +159,13 @@ class ViewController: UIViewController, TimerLabelDelegate
             self.runTimer?.pause()
             self.walkTimer?.pause()
             
-            self.startButton?.setBackgroundImage(UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("startButton", ofType: "png")!), forState: .Normal)
+            self.clearNotifications()
+            
+            self.startButton?.setImage(UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("startButton", ofType: "png")!), forState: .Normal)
         }
         else
         {
-            UIView.animateWithDuration(0.5)
-            {
-                self.timerGroup?.hidden = false
-                self.userInputGroup?.hidden = true
-                self.resetButton?.hidden = false
-            }
+            self.hideInputs()
             
             NSUserDefaults.standardUserDefaults().setValue(NSDate(), forKey: kStartTime)
             NSUserDefaults.standardUserDefaults().setValue(self.userRunTime, forKey: kRunIntervalName)
@@ -179,7 +176,7 @@ class ViewController: UIViewController, TimerLabelDelegate
             self.runTimer?.start()
             self.scheduleAllNotificationsFromNow()
             
-            self.startButton?.setBackgroundImage(UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pauseButton", ofType: "png")!), forState: .Normal)
+            self.startButton?.setImage(UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pauseButton", ofType: "png")!), forState: .Normal)
 
         }
     }
@@ -188,7 +185,7 @@ class ViewController: UIViewController, TimerLabelDelegate
     {
         if self.overallTimer!.counting
         {
-            self.startButton?.setBackgroundImage(UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("startButton", ofType: "png")!), forState: .Normal)
+            self.startButton?.setImage(UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("startButton", ofType: "png")!), forState: .Normal)
         }
         
         self.overallTimer?.pause()
@@ -196,6 +193,7 @@ class ViewController: UIViewController, TimerLabelDelegate
         self.walkTimer?.pause()
         
         self.overallTimer?.reset()
+        self.overallLabel?.text = "0:00:00"
         self.runTimer?.reset()
         self.walkTimer?.reset()
         
@@ -205,14 +203,35 @@ class ViewController: UIViewController, TimerLabelDelegate
         NSUserDefaults.standardUserDefaults().setValue(nil, forKey: kRunIntervalName)
         NSUserDefaults.standardUserDefaults().setValue(nil, forKey: kWalkIntervalName)
 
-        
-        UIView.animateWithDuration(0.5)
-        {
-            self.timerGroup?.hidden = true
-            self.userInputGroup?.hidden = false
-            self.resetButton?.hidden = true
-        }
+        self.hideTimers()
 
+    }
+    
+    func hideInputs()
+    {
+        self.runLabel?.hidden = false
+        self.walkLabel?.hidden = false
+        
+        self.runUserInputTextField?.hidden = true
+        self.runInputMinuteLabel?.hidden = true
+        self.walkInputMinuteLabel?.hidden = true
+        self.walkUserInputTextField?.hidden = true
+        
+        self.resetButton?.hidden = false
+        
+    }
+    
+    func hideTimers()
+    {
+        self.runUserInputTextField?.hidden = false
+        self.runInputMinuteLabel?.hidden = false
+        self.walkUserInputTextField?.hidden = false
+        self.walkInputMinuteLabel?.hidden = false
+        
+        self.runLabel?.hidden = true
+        self.walkLabel?.hidden = true
+        
+        self.resetButton?.hidden = true
     }
     
     func scheduleAllNotificationsFromNow()
