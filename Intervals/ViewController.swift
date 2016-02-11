@@ -37,6 +37,8 @@ class ViewController: UIViewController, TimerLabelDelegate
     @IBOutlet var userInputGroup: UIStackView?
     @IBOutlet var timerGroup: UIStackView?
     
+    @IBOutlet var currentModeLabel: UILabel?
+    
     @IBOutlet var mainStackView: UIStackView?
     
     var userRunTime: NSTimeInterval = kDefaultRunTime
@@ -80,14 +82,17 @@ class ViewController: UIViewController, TimerLabelDelegate
                 self.runTimer?.timeFormat = "mm:ss"
                 self.runTimer?.timerDelegate = self
                 self.runTimer?.setCountDownTime(self.userRunTime)
+                self.runLabel?.textColor = kMidGreenColor
+                self.runUserInputTextField?.textColor = kMidGreenColor
                 
                 self.walkTimer = TimerLabel(label: self.walkLabel, timerType: .Timer)
                 self.walkTimer?.timeFormat = "mm:ss"
                 self.walkTimer?.timerDelegate = self
                 self.walkTimer?.setCountDownTime(self.userWalkTime)
+                self.walkLabel?.textColor = kMidBlueColor
+                self.walkUserInputTextField?.textColor = kMidBlueColor
                 
                 self.overallTimer = TimerLabel(label: self.overallLabel, timerType: .Stopwatch)
-                self.overallTimer?.timeFormat = "hh:mm:ss"
                 self.overallTimer?.timerDelegate = self
                 self.overallTimer?.setStopWatchTime(timeDifference)
                 
@@ -116,16 +121,23 @@ class ViewController: UIViewController, TimerLabelDelegate
             self.runTimer?.timeFormat = "mm:ss"
             self.runTimer?.timerDelegate = self
             self.runTimer?.setCountDownTime(self.userRunTime)
+            self.runLabel?.textColor = kMidGreenColor
+            self.runUserInputTextField?.textColor = kMidGreenColor
+
             
             self.walkTimer = TimerLabel(label: self.walkLabel, timerType: .Timer)
             self.walkTimer?.timeFormat = "mm:ss"
             self.walkTimer?.timerDelegate = self
             self.walkTimer?.setCountDownTime(self.userWalkTime)
+            self.walkLabel?.textColor = kMidBlueColor
+            self.walkUserInputTextField?.textColor = kMidBlueColor
+
             
             self.overallTimer = TimerLabel(label: self.overallLabel, timerType: .Stopwatch)
             self.overallTimer?.timerDelegate = self
             
             self.hideTimers()
+            self.currentModeLabel?.text = ""
         }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "scheduleAllNotifications", name: kBackgroundAlert, object: nil)
@@ -141,12 +153,50 @@ class ViewController: UIViewController, TimerLabelDelegate
     }
     
     func didRecieveRunNotification()
-    {   
+    {
+        self.currentModeLabel?.text = "Running"
+        self.currentModeLabel?.textColor = kMidGreenColor
+        
+        self.runLabel?.alpha = 1.0
+        self.walkLabel?.alpha = 0.3
+        
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+        
+        let alert = UIAlertController(title: "Switch!", message: "Start running!", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+        
+        self.presentViewController(alert, animated: true)
+        {
+            delay(3)
+            {
+                alert.dismissViewControllerAnimated(true, completion: nil)
+            }
+        }
+
         self.playBeeps(2)
     }
     
     func didRecieveWalkNotification()
     {
+        self.currentModeLabel?.text = "Walking"
+        self.currentModeLabel?.textColor = kMidBlueColor
+        
+        self.runLabel?.alpha = 0.3
+        self.walkLabel?.alpha = 1.0
+
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+        
+        let alert = UIAlertController(title: "Switch!", message: "Start walking!", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+        
+        self.presentViewController(alert, animated: true)
+            {
+                delay(3)
+                    {
+                        alert.dismissViewControllerAnimated(true, completion: nil)
+                }
+        }
+
         self.playBeeps(1)
     }
     
@@ -159,19 +209,25 @@ class ViewController: UIViewController, TimerLabelDelegate
             self.runTimer?.pause()
             self.walkTimer?.pause()
             
+            self.currentModeLabel?.text = ""
+            
             self.clearNotifications()
             
             self.startButton?.setImage(UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("startButton", ofType: "png")!), forState: .Normal)
         }
         else
         {
+            self.currentlyRunning = true
+            
             self.hideInputs()
+            
+            self.currentModeLabel?.text = "Running"
+            self.currentModeLabel?.textColor = kMidGreenColor
             
             NSUserDefaults.standardUserDefaults().setValue(NSDate(), forKey: kStartTime)
             NSUserDefaults.standardUserDefaults().setValue(self.userRunTime, forKey: kRunIntervalName)
             NSUserDefaults.standardUserDefaults().setValue(self.userWalkTime, forKey: kWalkIntervalName)
-
-            self.currentlyRunning = true
+            
             self.overallTimer?.start()
             self.runTimer?.start()
             self.scheduleAllNotificationsFromNow()
@@ -187,6 +243,8 @@ class ViewController: UIViewController, TimerLabelDelegate
         {
             self.startButton?.setImage(UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("startButton", ofType: "png")!), forState: .Normal)
         }
+        
+        self.currentModeLabel?.text = ""
         
         self.overallTimer?.pause()
         self.runTimer?.pause()
@@ -211,6 +269,18 @@ class ViewController: UIViewController, TimerLabelDelegate
     {
         self.runLabel?.hidden = false
         self.walkLabel?.hidden = false
+        
+        if self.currentlyRunning
+        {
+            self.runLabel?.alpha = 1.0
+            self.walkLabel?.alpha = 0.3
+        }
+        else
+        {
+            self.runLabel?.alpha = 0.3
+            self.walkLabel?.alpha = 1.0
+        }
+        
         
         self.runUserInputTextField?.hidden = true
         self.runInputMinuteLabel?.hidden = true
@@ -315,16 +385,6 @@ class ViewController: UIViewController, TimerLabelDelegate
             
             self.runTimer?.setCountDownTime(self.userRunTime)
             
-//            let alert = UIAlertController(title: "Switch!", message: "Start walking!", preferredStyle: .Alert)
-//            alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
-//            
-//            self.presentViewController(alert, animated: true)
-//            {
-//                delay(3)
-//                {
-//                    alert.dismissViewControllerAnimated(true, completion: nil)
-//                }
-//            }
         }
         else if timerLabel == self.walkTimer
         {

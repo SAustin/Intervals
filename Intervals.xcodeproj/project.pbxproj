@@ -25,6 +25,7 @@
 		61A269311C6577610010ADBD /* icon180.png in Resources */ = {isa = PBXBuildFile; fileRef = 61A2692B1C6577610010ADBD /* icon180.png */; };
 		61A269321C6577610010ADBD /* icon512.png in Resources */ = {isa = PBXBuildFile; fileRef = 61A2692C1C6577610010ADBD /* icon512.png */; };
 		61A269331C6577610010ADBD /* icon1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 61A2692D1C6577610010ADBD /* icon1024.png */; };
+		E1B2EBE01C6C3DAF00AD7165 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B2EBDF1C6C3DAF00AD7165 /* Color.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		61A2692B1C6577610010ADBD /* icon180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon180.png; path = Images/icon180.png; sourceTree = "<group>"; };
 		61A2692C1C6577610010ADBD /* icon512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon512.png; path = Images/icon512.png; sourceTree = "<group>"; };
 		61A2692D1C6577610010ADBD /* icon1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon1024.png; path = Images/icon1024.png; sourceTree = "<group>"; };
+		E1B2EBDF1C6C3DAF00AD7165 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				6167FBAC1C40B9D100A4B341 /* AppDelegate.swift */,
 				6167FBAE1C40B9D100A4B341 /* ViewController.swift */,
 				61A2691B1C6052380010ADBD /* Constants.swift */,
+				E1B2EBDF1C6C3DAF00AD7165 /* Color.swift */,
 				6167FBB01C40B9D100A4B341 /* Main.storyboard */,
 				6167FBB61C40B9D100A4B341 /* Assets.xcassets */,
 				6167FBB81C40B9D100A4B341 /* LaunchScreen.storyboard */,
@@ -214,6 +217,7 @@
 				6167FBAF1C40B9D100A4B341 /* ViewController.swift in Sources */,
 				6167FBAD1C40B9D100A4B341 /* AppDelegate.swift in Sources */,
 				6167FBB51C40B9D100A4B341 /* Intervals.xcdatamodeld in Sources */,
+				E1B2EBE01C6C3DAF00AD7165 /* Color.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
