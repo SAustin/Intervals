@@ -53,6 +53,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
     }
+    
+
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification)
+    {
+        if (notification.alertBody! as NSString).containsString("Begin running")
+        {
+            NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kLocalRunNotificationRecieved, object: nil))
+        }
+        else if (notification.alertBody! as NSString).containsString("Begin walking")
+        {
+            NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kLocalWalkNotificationRecieved, object: nil))
+        }
+        
+        
+    }
 
     // MARK: - Core Data stack
 
