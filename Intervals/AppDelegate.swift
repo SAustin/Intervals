@@ -8,12 +8,24 @@
 
 import UIKit
 import CoreData
+import WatchConnectivity
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate
+{
 
     var window: UIWindow?
-
+    var session: WCSession?
+    {
+        didSet
+        {
+            if let session = session
+            {
+                session.delegate = self
+                session.activateSession()
+            }
+        }
+    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
     {
@@ -23,6 +35,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UIApplication.sharedApplication().registerUserNotificationSettings(settings)
         
+        if WCSession.isSupported()
+        {
+            session = WCSession.defaultSession()
+        }
         
         return true
     }
@@ -131,6 +147,67 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    
+    func scheduleAllNotificationsFromNow(currentlyRunning: Bool, timeRemaining: NSTimeInterval, runTime: NSTimeInterval, walkTime: NSTimeInterval)
+    {
+        var timeFromNow = timeRemaining
+        
+        for _ in 0...64
+        {
+            scheduleNotifications(timeFromNow, runReminder: !currentlyRunning)
+            timeFromNow += currentlyRunning ? walkTime : runTime
+            scheduleNotifications(timeFromNow, runReminder: currentlyRunning)
+            timeFromNow += currentlyRunning ? runTime : walkTime
+        }
+    }
+    
+    func scheduleNotifications(timeFromNow: NSTimeInterval, runReminder: Bool)
+    {
+        //Schedule reminders
+        let notification = UILocalNotification()
+        
+        if runReminder
+        {
+            notification.alertTitle = "Start Running!"
+            notification.alertBody = "Begin running segment!"
+        }
+        else
+        {
+            notification.alertTitle = "Start Walking!"
+            notification.alertBody = "Begin walking segment!"
+        }
+        
+        
+        notification.soundName = UILocalNotificationDefaultSoundName
+        notification.fireDate = NSDate().dateByAddingTimeInterval(timeFromNow)
+        notification.category = "IntervalReminder"
+        
+        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+    }
+    
+    func clearNotifications()
+    {
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
+    }
+    
+    
 
 }
 
+extension AppDelegate: WCSessionDelegate
+{
+    func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void)
+    {
+        let scheduleNotifications = message["schedule"] as! Bool
+        
+        if scheduleNotifications
+        {
+            self.scheduleAllNotificationsFromNow(message["currentlyRunning"] as! Bool, timeRemaining: message["timeRemaining"] as! NSTimeInterval, runTime: message["runTime"] as! NSTimeInterval, walkTime: message["walkTime"] as! NSTimeInterval)
+        }
+        else
+        {
+            self.clearNotifications()
+        }
+    }
+}

@@ -13,6 +13,7 @@
 		6167FBB51C40B9D100A4B341 /* Intervals.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6167FBB31C40B9D100A4B341 /* Intervals.xcdatamodeld */; };
 		6167FBB71C40B9D100A4B341 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6167FBB61C40B9D100A4B341 /* Assets.xcassets */; };
 		6167FBBA1C40B9D100A4B341 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6167FBB81C40B9D100A4B341 /* LaunchScreen.storyboard */; };
+		619B6E481C7621E80074100F /* WatchColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619B6E471C7621E80074100F /* WatchColors.swift */; };
 		61A269151C604ECE0010ADBD /* pauseButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 61A269121C604ECE0010ADBD /* pauseButton.png */; };
 		61A269161C604ECE0010ADBD /* resetButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 61A269131C604ECE0010ADBD /* resetButton.png */; };
 		61A269171C604ECE0010ADBD /* startButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 61A269141C604ECE0010ADBD /* startButton.png */; };
@@ -91,6 +92,7 @@
 		6167FBB61C40B9D100A4B341 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6167FBB91C40B9D100A4B341 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6167FBBB1C40B9D100A4B341 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		619B6E471C7621E80074100F /* WatchColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchColors.swift; sourceTree = "<group>"; };
 		61A269121C604ECE0010ADBD /* pauseButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pauseButton.png; sourceTree = "<group>"; };
 		61A269131C604ECE0010ADBD /* resetButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resetButton.png; sourceTree = "<group>"; };
 		61A269141C604ECE0010ADBD /* startButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = startButton.png; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 				61F18EC31C7570BD00C34222 /* GlanceController.swift */,
 				61F18EC51C7570BD00C34222 /* ComplicationController.swift */,
 				61F18ED51C7575BE00C34222 /* WatchConstants.swift */,
+				619B6E471C7621E80074100F /* WatchColors.swift */,
 				61F18EC71C7570BD00C34222 /* Assets.xcassets */,
 				61F18EC91C7570BD00C34222 /* Info.plist */,
 				61F18EBB1C7570BD00C34222 /* Supporting Files */,
@@ -407,6 +410,7 @@
 				61F18ED91C75801600C34222 /* WatchTimerInterfaceController.swift in Sources */,
 				61F18EC61C7570BD00C34222 /* ComplicationController.swift in Sources */,
 				61F18ED61C7575BE00C34222 /* WatchConstants.swift in Sources */,
+				619B6E481C7621E80074100F /* WatchColors.swift in Sources */,
 				61F18EBE1C7570BD00C34222 /* InterfaceController.swift in Sources */,
 				61F18EC41C7570BD00C34222 /* GlanceController.swift in Sources */,
 			);
@@ -654,6 +658,7 @@
 				61F18ED01C7570BD00C34222 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		61F18ED31C7570BD00C34222 /* Build configuration list for PBXNativeTarget "IntervalWatch" */ = {
 			isa = XCConfigurationList;
@@ -662,6 +667,7 @@
 				61F18ECE1C7570BD00C34222 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

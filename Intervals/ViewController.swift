@@ -67,7 +67,8 @@ class ViewController: UIViewController, TimerLabelDelegate
         //If this exists, the app went to sleep while we were in a run. I think.
         if let startTime = NSUserDefaults.standardUserDefaults().valueForKey(kStartTime) as? NSDate
         {
-            self.clearNotifications()
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            appDelegate.clearNotifications()
             
             if self.runTimer == nil
             {
@@ -211,7 +212,8 @@ class ViewController: UIViewController, TimerLabelDelegate
             
             self.currentModeLabel?.text = ""
             
-            self.clearNotifications()
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            appDelegate.clearNotifications()
             
             self.startButton?.setImage(UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("startButton", ofType: "png")!), forState: .Normal)
         }
@@ -230,7 +232,11 @@ class ViewController: UIViewController, TimerLabelDelegate
             
             self.overallTimer?.start()
             self.runTimer?.start()
-            self.scheduleAllNotificationsFromNow()
+            
+            let timeRemaining =  currentlyRunning ? self.runTimer!.getTimeRemaining() : self.walkTimer!.getTimeRemaining()
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            appDelegate.scheduleAllNotificationsFromNow(self.currentlyRunning, timeRemaining: timeRemaining, runTime: userRunTime, walkTime: userWalkTime)
+
             
             self.startButton?.setImage(UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pauseButton", ofType: "png")!), forState: .Normal)
 
@@ -255,7 +261,8 @@ class ViewController: UIViewController, TimerLabelDelegate
         self.runTimer?.reset()
         self.walkTimer?.reset()
         
-        self.clearNotifications()
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.clearNotifications()
         
         NSUserDefaults.standardUserDefaults().setValue(nil, forKey: kStartTime)
         NSUserDefaults.standardUserDefaults().setValue(nil, forKey: kRunIntervalName)
@@ -304,47 +311,6 @@ class ViewController: UIViewController, TimerLabelDelegate
         self.resetButton?.hidden = true
     }
     
-    func scheduleAllNotificationsFromNow()
-    {
-        var timeFromNow = self.currentlyRunning ? self.runTimer!.getTimeRemaining() : self.walkTimer!.getTimeRemaining()
-        
-        for _ in 0...64
-        {
-            self.scheduleNotifications(timeFromNow, runReminder: !self.currentlyRunning)
-            timeFromNow += self.currentlyRunning ? self.userWalkTime : self.userRunTime
-            self.scheduleNotifications(timeFromNow, runReminder: self.currentlyRunning)
-            timeFromNow += self.currentlyRunning ? self.userRunTime : self.userWalkTime
-        }
-    }
-
-    func scheduleNotifications(timeFromNow: NSTimeInterval, runReminder: Bool)
-    {
-        //Schedule reminders
-        let notification = UILocalNotification()
-        
-        if runReminder
-        {
-            notification.alertTitle = "Start Running!"
-            notification.alertBody = "Begin running segment!"
-        }
-        else
-        {
-            notification.alertTitle = "Start Walking!"
-            notification.alertBody = "Begin walking segment!"
-        }
-        
-        
-        notification.soundName = UILocalNotificationDefaultSoundName
-        notification.fireDate = NSDate().dateByAddingTimeInterval(timeFromNow)
-        notification.category = "IntervalReminder"
-        
-        UIApplication.sharedApplication().scheduleLocalNotification(notification)
-    }
-    
-    func clearNotifications()
-    {
-        UIApplication.sharedApplication().cancelAllLocalNotifications()
-    }
 
     //MARK: - UITextFields
     @IBAction func runTimeWasUpdated(sender: UITextField)
