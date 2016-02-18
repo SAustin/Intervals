@@ -57,10 +57,10 @@
             </objects>
             <point key="canvasLocation" x="235" y="347"/>
         </scene>
-        <!--Watch Timer Interface Controller-->
+        <!--Timer-->
         <scene sceneID="dQC-qO-l4K">
             <objects>
-                <controller id="BG0-dc-Cwg" customClass="WatchTimerInterfaceController" customModule="IntervalWatch_Extension">
+                <controller identifier="Timer" id="BG0-dc-Cwg" customClass="WatchTimerInterfaceController" customModule="IntervalWatch_Extension">
                     <items>
                         <group width="1" height="97" alignment="center" layout="vertical" id="b6I-vf-5vQ">
                             <items>

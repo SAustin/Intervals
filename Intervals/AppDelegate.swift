@@ -35,11 +35,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         
         UIApplication.sharedApplication().registerUserNotificationSettings(settings)
         
-        if WCSession.isSupported()
-        {
-            session = WCSession.defaultSession()
-        }
-        
         return true
     }
 

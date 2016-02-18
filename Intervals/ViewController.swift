@@ -14,6 +14,7 @@
 import UIKit
 import AVFoundation
 import AudioToolbox
+import WatchConnectivity
 
 class ViewController: UIViewController, TimerLabelDelegate
 {
@@ -50,12 +51,29 @@ class ViewController: UIViewController, TimerLabelDelegate
     
     var soundPlayer: AVAudioPlayer?
     
+    var session: WCSession? {
+        didSet {
+            if let session = session
+            {
+                session.delegate = self
+                session.activateSession()
+            }
+        }
+    }
+    
     override func viewDidLoad()
     {
         //TODO: Make sure the re-loading is pulling correct times for run/walk and setting run/walk correctly.
         //TODO: Make a label to make it clear which interval you're on.
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        //IS there a watch?
+        if WCSession.isSupported()
+        {
+            session = WCSession.defaultSession()
+        }
+
         
         var timeDifference: NSTimeInterval
         
@@ -216,6 +234,7 @@ class ViewController: UIViewController, TimerLabelDelegate
             appDelegate.clearNotifications()
             
             self.startButton?.setImage(UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("startButton", ofType: "png")!), forState: .Normal)
+            self.scheduleWatch(false)
         }
         else
         {
@@ -226,7 +245,8 @@ class ViewController: UIViewController, TimerLabelDelegate
             self.currentModeLabel?.text = "Running"
             self.currentModeLabel?.textColor = kMidGreenColor
             
-            NSUserDefaults.standardUserDefaults().setValue(NSDate(), forKey: kStartTime)
+            startTime = NSDate()
+            NSUserDefaults.standardUserDefaults().setValue(startTime!, forKey: kStartTime)
             NSUserDefaults.standardUserDefaults().setValue(self.userRunTime, forKey: kRunIntervalName)
             NSUserDefaults.standardUserDefaults().setValue(self.userWalkTime, forKey: kWalkIntervalName)
             
@@ -237,10 +257,56 @@ class ViewController: UIViewController, TimerLabelDelegate
             let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             appDelegate.scheduleAllNotificationsFromNow(self.currentlyRunning, timeRemaining: timeRemaining, runTime: userRunTime, walkTime: userWalkTime)
 
-            
+            self.scheduleWatch(true)
             self.startButton?.setImage(UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pauseButton", ofType: "png")!), forState: .Normal)
 
         }
+    }
+    
+    func scheduleWatch(shouldBeTiming: Bool)
+    {
+        if WCSession.isSupported()
+        {
+            var messageDictionary: [String : AnyObject]?
+            
+            if shouldBeTiming
+            {
+                let timeRemaining =  currentlyRunning ? self.runTimer!.getTimeRemaining() : self.walkTimer!.getTimeRemaining()
+                
+                messageDictionary = ["schedule" : true,
+                    "currentlyRunning" : currentlyRunning,
+                    "startDate": startTime!,
+                    "timeRemaining" : timeRemaining,
+                    "runTime" : userRunTime,
+                    "walkTime" : userWalkTime]
+            }
+            else
+            {
+                messageDictionary = ["schedule" : false]
+            }
+            
+            if session!.reachable
+            {
+                session!.sendMessage(messageDictionary!, replyHandler: nil, errorHandler: {
+                    error in
+                    NSLog("\(error)")
+                })
+            }
+            else
+            {
+                do
+                {
+                    try session?.updateApplicationContext(messageDictionary!)
+                }
+                catch
+                {
+                    NSLog("\(error)")
+                }
+                
+            }
+            
+        }
+
     }
     
     @IBAction func resetWasPressed(sender: UIButton)
@@ -260,6 +326,8 @@ class ViewController: UIViewController, TimerLabelDelegate
         self.overallLabel?.text = "0:00:00"
         self.runTimer?.reset()
         self.walkTimer?.reset()
+        
+        self.scheduleWatch(false)
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.clearNotifications()
@@ -381,5 +449,34 @@ class ViewController: UIViewController, TimerLabelDelegate
     }
 
     
+}
+
+extension ViewController: WCSessionDelegate
+{
+    func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject])
+    {
+        recievedWatchMessage(applicationContext)
+    }
+    
+    func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void)
+    {
+        recievedWatchMessage(message)
+    }
+    
+    func recievedWatchMessage(message: [String : AnyObject])
+    {
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let scheduleNotifications = message["schedule"] as! Bool
+        
+        if scheduleNotifications
+        {
+            appDelegate.scheduleAllNotificationsFromNow(message["currentlyRunning"] as! Bool, timeRemaining: message["timeRemaining"] as! NSTimeInterval, runTime: message["runTime"] as! NSTimeInterval, walkTime: message["walkTime"] as! NSTimeInterval)
+        }
+        else
+        {
+            appDelegate.clearNotifications()
+        }
+
+    }
 }
 

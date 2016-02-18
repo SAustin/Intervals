@@ -60,9 +60,15 @@ class WatchTimerInterfaceController: WKInterfaceController
     {
         super.awakeWithContext(context)
         
+        if WCSession.isSupported()
+        {
+            session = WCSession.defaultSession()
+        }
+        
         // Configure interface objects here.
-        userRunTime = (context as! [NSTimeInterval])[0]
-        userWalkTime = (context as! [NSTimeInterval])[1]
+        
+        userRunTime = (context as! [String : AnyObject])["runTime"] as? NSTimeInterval
+        userWalkTime = (context as! [String: AnyObject])["walkTime"] as? NSTimeInterval
         
         countdownTimer.setDate(NSDate().dateByAddingTimeInterval(userRunTime!))
         parentTimer = NSTimer.scheduledTimerWithTimeInterval(userRunTime!, target: self, selector: "timerDone", userInfo: nil, repeats: false)
@@ -122,10 +128,6 @@ class WatchTimerInterfaceController: WKInterfaceController
             setStartButtonStyle()
 
         }
-        
-        
-        
-
     }
     
     override func didDeactivate()
@@ -141,7 +143,7 @@ class WatchTimerInterfaceController: WKInterfaceController
         if WCSession.isSupported()
         {
             session = WCSession.defaultSession()
-            
+
             var currentlyRunning = true
             if currentMode != .Running
             {
@@ -150,11 +152,31 @@ class WatchTimerInterfaceController: WKInterfaceController
             
             let messageDictionary: [String : AnyObject] = ["schedule" : true,
                 "currentlyRunning" : currentlyRunning,
+                "startDate": startTime!,
                 "timeRemaining" : timeRemaining,
                 "runTime" : userRunTime!,
                 "walkTime" : userWalkTime!]
+         
+            if session!.reachable
+            {
+                session!.sendMessage(messageDictionary, replyHandler: nil, errorHandler: {
+                    error in
+                    NSLog("\(error)")
+                })
+            }
+            else
+            {
+                do
+                {
+                    try session?.updateApplicationContext(messageDictionary)
+                }
+                catch
+                {
+                    NSLog("\(error)")
+                }
+                
+            }
             
-            session!.sendMessage(messageDictionary, replyHandler: nil, errorHandler: nil)
         }
     }
     

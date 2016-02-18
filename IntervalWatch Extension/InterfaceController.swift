@@ -7,6 +7,7 @@
 //
 
 import WatchKit
+import WatchConnectivity
 import Foundation
 
 
@@ -24,10 +25,26 @@ class InterfaceController: WKInterfaceController
     var userRunTime: NSTimeInterval = kDefaultRunTime
     var userWalkTime: NSTimeInterval = kDefaultWalkTime
     
+    var session: WCSession? {
+        didSet {
+            if let session = session
+            {
+                session.delegate = self
+                session.activateSession()
+            }
+        }
+    }
+
+    
     override func awakeWithContext(context: AnyObject?)
     {
         super.awakeWithContext(context)
         
+        if WCSession.isSupported()
+        {
+            session = WCSession.defaultSession()
+        }
+
         // Configure interface objects here.
         createPickerArrays()
         
@@ -37,6 +54,18 @@ class InterfaceController: WKInterfaceController
         walkMinutesLabel?.setSelectedItemIndex(1)
         runSecondsLabel?.setItems(secondOptions)
         walkSecondsLabel?.setItems(secondOptions)
+        
+        if let message = context as? [String: AnyObject]
+        {
+            if let currentlyRunning = message["schedule"] as? Bool
+            {
+                if currentlyRunning
+                {
+                    pushControllerWithName("Timer", context: context)
+                }
+            }
+        }
+
     }
 
     override func willActivate()
@@ -56,7 +85,12 @@ class InterfaceController: WKInterfaceController
         switch segueIdentifier
         {
         case "startRunningSegue":
-            return [userRunTime, userWalkTime]
+            return ["schedule" : true,
+                "currentlyRunning" : true,
+                "startDate": NSDate(),
+                "timeRemaining" : userRunTime,
+                "runTime" : userRunTime,
+                "walkTime" : userWalkTime]
         default:
             return nil
         }
@@ -104,4 +138,9 @@ class InterfaceController: WKInterfaceController
         userWalkTime = userWalkTime - currentWalkSeconds + Double(index)
     }
 
+}
+
+extension InterfaceController: WCSessionDelegate
+{
+    
 }
