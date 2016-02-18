@@ -4,15 +4,40 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Complication - IntervalWatch.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>Glance - IntervalWatch.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>IntervalWatch.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>Intervals.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>Notification - IntervalWatch.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>6167FBA81C40B9D100A4B341</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>61F18EA91C7570BD00C34222</key>
 		<dict>
 			<key>primary</key>
 			<true/>

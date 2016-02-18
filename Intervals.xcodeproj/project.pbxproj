@@ -25,8 +25,62 @@
 		61A269311C6577610010ADBD /* icon180.png in Resources */ = {isa = PBXBuildFile; fileRef = 61A2692B1C6577610010ADBD /* icon180.png */; };
 		61A269321C6577610010ADBD /* icon512.png in Resources */ = {isa = PBXBuildFile; fileRef = 61A2692C1C6577610010ADBD /* icon512.png */; };
 		61A269331C6577610010ADBD /* icon1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 61A2692D1C6577610010ADBD /* icon1024.png */; };
+		61F18EAE1C7570BD00C34222 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 61F18EAC1C7570BD00C34222 /* Interface.storyboard */; };
+		61F18EB01C7570BD00C34222 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61F18EAF1C7570BD00C34222 /* Assets.xcassets */; };
+		61F18EB71C7570BD00C34222 /* IntervalWatch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 61F18EB61C7570BD00C34222 /* IntervalWatch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		61F18EBE1C7570BD00C34222 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F18EBD1C7570BD00C34222 /* InterfaceController.swift */; };
+		61F18EC01C7570BD00C34222 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F18EBF1C7570BD00C34222 /* ExtensionDelegate.swift */; };
+		61F18EC21C7570BD00C34222 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F18EC11C7570BD00C34222 /* NotificationController.swift */; };
+		61F18EC41C7570BD00C34222 /* GlanceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F18EC31C7570BD00C34222 /* GlanceController.swift */; };
+		61F18EC61C7570BD00C34222 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F18EC51C7570BD00C34222 /* ComplicationController.swift */; };
+		61F18EC81C7570BD00C34222 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61F18EC71C7570BD00C34222 /* Assets.xcassets */; };
+		61F18ECC1C7570BD00C34222 /* IntervalWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 61F18EAA1C7570BD00C34222 /* IntervalWatch.app */; };
+		61F18ED61C7575BE00C34222 /* WatchConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F18ED51C7575BE00C34222 /* WatchConstants.swift */; };
+		61F18ED91C75801600C34222 /* WatchTimerInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F18ED81C75801600C34222 /* WatchTimerInterfaceController.swift */; };
 		E1B2EBE01C6C3DAF00AD7165 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B2EBDF1C6C3DAF00AD7165 /* Color.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		61F18EB81C7570BD00C34222 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6167FBA11C40B9D100A4B341 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 61F18EB51C7570BD00C34222;
+			remoteInfo = "IntervalWatch Extension";
+		};
+		61F18ECA1C7570BD00C34222 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6167FBA11C40B9D100A4B341 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 61F18EA91C7570BD00C34222;
+			remoteInfo = IntervalWatch;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		61F18ED21C7570BD00C34222 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				61F18EB71C7570BD00C34222 /* IntervalWatch Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		61F18ED41C7570BD00C34222 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				61F18ECC1C7570BD00C34222 /* IntervalWatch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		6167FBA91C40B9D100A4B341 /* Intervals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Intervals.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -49,11 +103,33 @@
 		61A2692B1C6577610010ADBD /* icon180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon180.png; path = Images/icon180.png; sourceTree = "<group>"; };
 		61A2692C1C6577610010ADBD /* icon512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon512.png; path = Images/icon512.png; sourceTree = "<group>"; };
 		61A2692D1C6577610010ADBD /* icon1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon1024.png; path = Images/icon1024.png; sourceTree = "<group>"; };
+		61F18EAA1C7570BD00C34222 /* IntervalWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IntervalWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		61F18EAD1C7570BD00C34222 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		61F18EAF1C7570BD00C34222 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		61F18EB11C7570BD00C34222 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		61F18EB61C7570BD00C34222 /* IntervalWatch Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "IntervalWatch Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		61F18EBC1C7570BD00C34222 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		61F18EBD1C7570BD00C34222 /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
+		61F18EBF1C7570BD00C34222 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		61F18EC11C7570BD00C34222 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		61F18EC31C7570BD00C34222 /* GlanceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlanceController.swift; sourceTree = "<group>"; };
+		61F18EC51C7570BD00C34222 /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
+		61F18EC71C7570BD00C34222 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		61F18EC91C7570BD00C34222 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		61F18ED51C7575BE00C34222 /* WatchConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchConstants.swift; sourceTree = "<group>"; };
+		61F18ED81C75801600C34222 /* WatchTimerInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchTimerInterfaceController.swift; sourceTree = "<group>"; };
 		E1B2EBDF1C6C3DAF00AD7165 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		6167FBA61C40B9D100A4B341 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		61F18EB31C7570BD00C34222 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -67,6 +143,8 @@
 			isa = PBXGroup;
 			children = (
 				6167FBAB1C40B9D100A4B341 /* Intervals */,
+				61F18EAB1C7570BD00C34222 /* IntervalWatch */,
+				61F18EBA1C7570BD00C34222 /* IntervalWatch Extension */,
 				6167FBAA1C40B9D100A4B341 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -75,6 +153,8 @@
 			isa = PBXGroup;
 			children = (
 				6167FBA91C40B9D100A4B341 /* Intervals.app */,
+				61F18EAA1C7570BD00C34222 /* IntervalWatch.app */,
+				61F18EB61C7570BD00C34222 /* IntervalWatch Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -130,6 +210,41 @@
 			name = Sounds;
 			sourceTree = "<group>";
 		};
+		61F18EAB1C7570BD00C34222 /* IntervalWatch */ = {
+			isa = PBXGroup;
+			children = (
+				61F18EAC1C7570BD00C34222 /* Interface.storyboard */,
+				61F18EAF1C7570BD00C34222 /* Assets.xcassets */,
+				61F18EB11C7570BD00C34222 /* Info.plist */,
+			);
+			path = IntervalWatch;
+			sourceTree = "<group>";
+		};
+		61F18EBA1C7570BD00C34222 /* IntervalWatch Extension */ = {
+			isa = PBXGroup;
+			children = (
+				61F18EBD1C7570BD00C34222 /* InterfaceController.swift */,
+				61F18ED81C75801600C34222 /* WatchTimerInterfaceController.swift */,
+				61F18EBF1C7570BD00C34222 /* ExtensionDelegate.swift */,
+				61F18EC11C7570BD00C34222 /* NotificationController.swift */,
+				61F18EC31C7570BD00C34222 /* GlanceController.swift */,
+				61F18EC51C7570BD00C34222 /* ComplicationController.swift */,
+				61F18ED51C7575BE00C34222 /* WatchConstants.swift */,
+				61F18EC71C7570BD00C34222 /* Assets.xcassets */,
+				61F18EC91C7570BD00C34222 /* Info.plist */,
+				61F18EBB1C7570BD00C34222 /* Supporting Files */,
+			);
+			path = "IntervalWatch Extension";
+			sourceTree = "<group>";
+		};
+		61F18EBB1C7570BD00C34222 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				61F18EBC1C7570BD00C34222 /* PushNotificationPayload.apns */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -140,15 +255,51 @@
 				6167FBA51C40B9D100A4B341 /* Sources */,
 				6167FBA61C40B9D100A4B341 /* Frameworks */,
 				6167FBA71C40B9D100A4B341 /* Resources */,
+				61F18ED41C7570BD00C34222 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				61F18ECB1C7570BD00C34222 /* PBXTargetDependency */,
 			);
 			name = Intervals;
 			productName = Intervals;
 			productReference = 6167FBA91C40B9D100A4B341 /* Intervals.app */;
 			productType = "com.apple.product-type.application";
+		};
+		61F18EA91C7570BD00C34222 /* IntervalWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 61F18ED31C7570BD00C34222 /* Build configuration list for PBXNativeTarget "IntervalWatch" */;
+			buildPhases = (
+				61F18EA81C7570BD00C34222 /* Resources */,
+				61F18ED21C7570BD00C34222 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				61F18EB91C7570BD00C34222 /* PBXTargetDependency */,
+			);
+			name = IntervalWatch;
+			productName = IntervalWatch;
+			productReference = 61F18EAA1C7570BD00C34222 /* IntervalWatch.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		61F18EB51C7570BD00C34222 /* IntervalWatch Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 61F18ED11C7570BD00C34222 /* Build configuration list for PBXNativeTarget "IntervalWatch Extension" */;
+			buildPhases = (
+				61F18EB21C7570BD00C34222 /* Sources */,
+				61F18EB31C7570BD00C34222 /* Frameworks */,
+				61F18EB41C7570BD00C34222 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "IntervalWatch Extension";
+			productName = "IntervalWatch Extension";
+			productReference = 61F18EB61C7570BD00C34222 /* IntervalWatch Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -163,6 +314,13 @@
 					6167FBA81C40B9D100A4B341 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = YMJJF4LH5P;
+					};
+					61F18EA91C7570BD00C34222 = {
+						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = YMJJF4LH5P;
+					};
+					61F18EB51C7570BD00C34222 = {
+						CreatedOnToolsVersion = 7.2;
 					};
 				};
 			};
@@ -180,6 +338,8 @@
 			projectRoot = "";
 			targets = (
 				6167FBA81C40B9D100A4B341 /* Intervals */,
+				61F18EA91C7570BD00C34222 /* IntervalWatch */,
+				61F18EB51C7570BD00C34222 /* IntervalWatch Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -205,6 +365,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		61F18EA81C7570BD00C34222 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61F18EB01C7570BD00C34222 /* Assets.xcassets in Resources */,
+				61F18EAE1C7570BD00C34222 /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		61F18EB41C7570BD00C34222 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61F18EC81C7570BD00C34222 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -221,7 +398,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		61F18EB21C7570BD00C34222 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61F18EC21C7570BD00C34222 /* NotificationController.swift in Sources */,
+				61F18EC01C7570BD00C34222 /* ExtensionDelegate.swift in Sources */,
+				61F18ED91C75801600C34222 /* WatchTimerInterfaceController.swift in Sources */,
+				61F18EC61C7570BD00C34222 /* ComplicationController.swift in Sources */,
+				61F18ED61C7575BE00C34222 /* WatchConstants.swift in Sources */,
+				61F18EBE1C7570BD00C34222 /* InterfaceController.swift in Sources */,
+				61F18EC41C7570BD00C34222 /* GlanceController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		61F18EB91C7570BD00C34222 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 61F18EB51C7570BD00C34222 /* IntervalWatch Extension */;
+			targetProxy = 61F18EB81C7570BD00C34222 /* PBXContainerItemProxy */;
+		};
+		61F18ECB1C7570BD00C34222 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 61F18EA91C7570BD00C34222 /* IntervalWatch */;
+			targetProxy = 61F18ECA1C7570BD00C34222 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		6167FBB01C40B9D100A4B341 /* Main.storyboard */ = {
@@ -238,6 +442,14 @@
 				6167FBB91C40B9D100A4B341 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		61F18EAC1C7570BD00C34222 /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				61F18EAD1C7570BD00C34222 /* Base */,
+			);
+			name = Interface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -350,6 +562,70 @@
 			};
 			name = Release;
 		};
+		61F18ECD1C7570BD00C34222 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				IBSC_MODULE = IntervalWatch_Extension;
+				INFOPLIST_FILE = IntervalWatch/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.europaSoftware.Intervals.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Debug;
+		};
+		61F18ECE1C7570BD00C34222 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				IBSC_MODULE = IntervalWatch_Extension;
+				INFOPLIST_FILE = IntervalWatch/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.europaSoftware.Intervals.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Release;
+		};
+		61F18ECF1C7570BD00C34222 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				INFOPLIST_FILE = "IntervalWatch Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.europaSoftware.Intervals.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Debug;
+		};
+		61F18ED01C7570BD00C34222 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				INFOPLIST_FILE = "IntervalWatch Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.europaSoftware.Intervals.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -370,6 +646,22 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		61F18ED11C7570BD00C34222 /* Build configuration list for PBXNativeTarget "IntervalWatch Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				61F18ECF1C7570BD00C34222 /* Debug */,
+				61F18ED01C7570BD00C34222 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		61F18ED31C7570BD00C34222 /* Build configuration list for PBXNativeTarget "IntervalWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				61F18ECD1C7570BD00C34222 /* Debug */,
+				61F18ECE1C7570BD00C34222 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 
