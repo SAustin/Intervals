@@ -15,23 +15,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate
 {
 
     var window: UIWindow?
-    var session: WCSession?
-    {
-        didSet
-        {
-            if let session = session
-            {
-                session.delegate = self
-                session.activateSession()
-            }
-        }
-    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
     {
         // Override point for customization after application launch.
         
         let settings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
+        
+        WatchSessionManager.sharedManager.startSession()
         
         UIApplication.sharedApplication().registerUserNotificationSettings(settings)
         
@@ -144,20 +135,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     }
     
     
-    func scheduleAllNotificationsFromNow(currentlyRunning: Bool, timeRemaining: NSTimeInterval, runTime: NSTimeInterval, walkTime: NSTimeInterval)
+    func scheduleAllNotificationsFromNow(currentlyRunning: Bool, timeRemaining: NSTimeInterval, startDate: NSDate, runTime: NSTimeInterval, walkTime: NSTimeInterval)
     {
-        var timeFromNow = timeRemaining
+        var timeFromNow = timeRemaining + NSDate().timeIntervalSinceDate(startDate)
         
         for _ in 0...64
         {
-            scheduleNotifications(timeFromNow, runReminder: !currentlyRunning)
+            scheduleNotifications(startDate, timeFromNow: timeFromNow, runReminder: !currentlyRunning)
             timeFromNow += currentlyRunning ? walkTime : runTime
-            scheduleNotifications(timeFromNow, runReminder: currentlyRunning)
+            scheduleNotifications(startDate, timeFromNow: timeFromNow, runReminder: currentlyRunning)
             timeFromNow += currentlyRunning ? runTime : walkTime
         }
     }
     
-    func scheduleNotifications(timeFromNow: NSTimeInterval, runReminder: Bool)
+    func scheduleNotifications(startDate: NSDate, timeFromNow: NSTimeInterval, runReminder: Bool)
     {
         //Schedule reminders
         let notification = UILocalNotification()
@@ -175,7 +166,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         
         
         notification.soundName = UILocalNotificationDefaultSoundName
-        notification.fireDate = NSDate().dateByAddingTimeInterval(timeFromNow)
+        notification.fireDate = startDate.dateByAddingTimeInterval(timeFromNow)
         notification.category = "IntervalReminder"
         
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
@@ -188,21 +179,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     
     
 
-}
-
-extension AppDelegate: WCSessionDelegate
-{
-    func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void)
-    {
-        let scheduleNotifications = message["schedule"] as! Bool
-        
-        if scheduleNotifications
-        {
-            self.scheduleAllNotificationsFromNow(message["currentlyRunning"] as! Bool, timeRemaining: message["timeRemaining"] as! NSTimeInterval, runTime: message["runTime"] as! NSTimeInterval, walkTime: message["walkTime"] as! NSTimeInterval)
-        }
-        else
-        {
-            self.clearNotifications()
-        }
-    }
 }

@@ -46,24 +46,9 @@ class WatchTimerInterfaceController: WKInterfaceController
     var isCounting = true
     var wakeFromSleep = false
     
-    var session: WCSession? {
-        didSet {
-            if let session = session
-            {
-                session.delegate = self
-                session.activateSession()
-            }
-        }
-    }
-    
     override func awakeWithContext(context: AnyObject?)
     {
         super.awakeWithContext(context)
-        
-        if WCSession.isSupported()
-        {
-            session = WCSession.defaultSession()
-        }
         
         // Configure interface objects here.
         
@@ -124,7 +109,6 @@ class WatchTimerInterfaceController: WKInterfaceController
             countdownTimer.setDate(NSDate().dateByAddingTimeInterval(timeRemaining))
             parentTimer = NSTimer.scheduledTimerWithTimeInterval(timeRemaining, target: self, selector: "timerDone", userInfo: nil, repeats: false)
             countdownTimer.start()
-            scheduleNotifications(timeRemaining)
             setStartButtonStyle()
 
         }
@@ -140,56 +124,52 @@ class WatchTimerInterfaceController: WKInterfaceController
     
     func scheduleNotifications(timeRemaining: NSTimeInterval)
     {
-        if WCSession.isSupported()
+        
+        var currentlyRunning = true
+        if currentMode != .Running
         {
-            session = WCSession.defaultSession()
+            currentlyRunning = false
+        }
+        
+        let messageDictionary: [String : AnyObject] = ["schedule" : true,
+            "currentlyRunning" : currentlyRunning,
+            "startDate": startTime!,
+            "timeRemaining" : timeRemaining,
+            "runTime" : userRunTime!,
+            "walkTime" : userWalkTime!]
 
-            var currentlyRunning = true
-            if currentMode != .Running
+        if !WatchSessionManager.sharedManager.sendMessage(messageDictionary, replyHandler: nil, errorHandler: nil)
+        {
+            do
             {
-                currentlyRunning = false
+                try WatchSessionManager.sharedManager.updateApplicationContext(messageDictionary)
             }
-            
-            let messageDictionary: [String : AnyObject] = ["schedule" : true,
-                "currentlyRunning" : currentlyRunning,
-                "startDate": startTime!,
-                "timeRemaining" : timeRemaining,
-                "runTime" : userRunTime!,
-                "walkTime" : userWalkTime!]
-         
-            if session!.reachable
+            catch
             {
-                session!.sendMessage(messageDictionary, replyHandler: nil, errorHandler: {
-                    error in
-                    NSLog("\(error)")
-                })
-            }
-            else
-            {
-                do
-                {
-                    try session?.updateApplicationContext(messageDictionary)
-                }
-                catch
-                {
-                    NSLog("\(error)")
-                }
-                
+                NSLog("\(error)")
             }
             
         }
+        
     }
     
     func cancelNotifications()
     {
-        if WCSession.isSupported()
+        let messageDictionary: [String:AnyObject] = ["schedule" : false]
+        
+        if !WatchSessionManager.sharedManager.sendMessage(messageDictionary, replyHandler: nil, errorHandler: nil)
         {
-            session = WCSession.defaultSession()
+            do
+            {
+                try WatchSessionManager.sharedManager.updateApplicationContext(messageDictionary)
+            }
+            catch
+            {
+                NSLog("\(error)")
+            }
             
-            let messageDictionary: [String:AnyObject] = ["schedule" : false]
-            
-            session!.sendMessage(messageDictionary, replyHandler: nil, errorHandler: nil)
         }
+        
     }
     
     func setStartButtonStyle()
@@ -213,18 +193,31 @@ class WatchTimerInterfaceController: WKInterfaceController
             isCounting = false
             
             pauseDate = NSDate()
-            elapsedTime += pauseDate!.timeIntervalSinceDate(startTime!)
+            elapsedTime += pauseDate!.timeIntervalSinceDate(currentModeStartTime!)
             
             parentTimer?.invalidate()
             self.countdownTimer.stop()
+            self.cancelNotifications()
             setStartButtonStyle()
         }
         else
         {
             isCounting = true
-            parentTimer = NSTimer.scheduledTimerWithTimeInterval(userRunTime! - elapsedTime, target: self, selector: "timerDone", userInfo: nil, repeats: false)
-            countdownTimer.setDate(NSDate(timeIntervalSinceNow: userRunTime! - elapsedTime))
+            
+            var currentModeTime: NSTimeInterval = 0
+            if currentMode == .Running
+            {
+                currentModeTime = userRunTime!
+            }
+            else
+            {
+                currentModeTime = userWalkTime!
+            }
+            
+            parentTimer = NSTimer.scheduledTimerWithTimeInterval(currentModeTime - elapsedTime, target: self, selector: "timerDone", userInfo: nil, repeats: false)
+            countdownTimer.setDate(NSDate(timeIntervalSinceNow: currentModeTime - elapsedTime))
             countdownTimer.start()
+            self.scheduleNotifications(userRunTime! - elapsedTime)
             setStartButtonStyle()
             
         }
@@ -249,9 +242,4 @@ class WatchTimerInterfaceController: WKInterfaceController
         countdownTimer.start()
     }
 
-}
-
-extension WatchTimerInterfaceController: WCSessionDelegate
-{
-    
 }

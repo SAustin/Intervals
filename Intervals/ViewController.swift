@@ -51,16 +51,6 @@ class ViewController: UIViewController, TimerLabelDelegate
     
     var soundPlayer: AVAudioPlayer?
     
-    var session: WCSession? {
-        didSet {
-            if let session = session
-            {
-                session.delegate = self
-                session.activateSession()
-            }
-        }
-    }
-    
     override func viewDidLoad()
     {
         //TODO: Make sure the re-loading is pulling correct times for run/walk and setting run/walk correctly.
@@ -68,12 +58,7 @@ class ViewController: UIViewController, TimerLabelDelegate
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        //IS there a watch?
-        if WCSession.isSupported()
-        {
-            session = WCSession.defaultSession()
-        }
-
+        WatchSessionManager.sharedManager.addMessageRecievedDelegate(self)
         
         var timeDifference: NSTimeInterval
         
@@ -255,7 +240,11 @@ class ViewController: UIViewController, TimerLabelDelegate
             
             let timeRemaining =  currentlyRunning ? self.runTimer!.getTimeRemaining() : self.walkTimer!.getTimeRemaining()
             let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            appDelegate.scheduleAllNotificationsFromNow(self.currentlyRunning, timeRemaining: timeRemaining, runTime: userRunTime, walkTime: userWalkTime)
+            appDelegate.scheduleAllNotificationsFromNow(self.currentlyRunning,
+                timeRemaining: timeRemaining,
+                startDate: startTime!,
+                runTime: userRunTime,
+                walkTime: userWalkTime)
 
             self.scheduleWatch(true)
             self.startButton?.setImage(UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pauseButton", ofType: "png")!), forState: .Normal)
@@ -285,26 +274,17 @@ class ViewController: UIViewController, TimerLabelDelegate
                 messageDictionary = ["schedule" : false]
             }
             
-            if session!.reachable
-            {
-                session!.sendMessage(messageDictionary!, replyHandler: nil, errorHandler: {
-                    error in
-                    NSLog("\(error)")
-                })
-            }
-            else
+            if !WatchSessionManager.sharedManager.sendMessage(messageDictionary!, replyHandler: nil, errorHandler: nil)
             {
                 do
                 {
-                    try session?.updateApplicationContext(messageDictionary!)
+                    try WatchSessionManager.sharedManager.updateApplicationContext(messageDictionary!)
                 }
                 catch
                 {
                     NSLog("\(error)")
                 }
-                
             }
-            
         }
 
     }
@@ -447,36 +427,30 @@ class ViewController: UIViewController, TimerLabelDelegate
             }
         }
     }
-
-    
 }
 
-extension ViewController: WCSessionDelegate
+extension ViewController: MessageWasRecievedDelegate
 {
-    func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject])
+    func newMessageWasRecieved(message: [String : AnyObject])
     {
-        recievedWatchMessage(applicationContext)
+        dispatch_async(dispatch_get_main_queue())
+        {
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            let scheduleNotifications = message["schedule"] as! Bool
+            
+            if scheduleNotifications
+            {
+                appDelegate.scheduleAllNotificationsFromNow(message["currentlyRunning"] as! Bool,
+                    timeRemaining: message["timeRemaining"] as! NSTimeInterval,
+                    startDate: message["startDate"] as! NSDate,
+                    runTime: message["runTime"] as! NSTimeInterval,
+                    walkTime: message["walkTime"] as! NSTimeInterval)
+            }
+            else
+            {
+                appDelegate.clearNotifications()
+            }
+        }
     }
     
-    func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void)
-    {
-        recievedWatchMessage(message)
-    }
-    
-    func recievedWatchMessage(message: [String : AnyObject])
-    {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let scheduleNotifications = message["schedule"] as! Bool
-        
-        if scheduleNotifications
-        {
-            appDelegate.scheduleAllNotificationsFromNow(message["currentlyRunning"] as! Bool, timeRemaining: message["timeRemaining"] as! NSTimeInterval, runTime: message["runTime"] as! NSTimeInterval, walkTime: message["walkTime"] as! NSTimeInterval)
-        }
-        else
-        {
-            appDelegate.clearNotifications()
-        }
-
-    }
 }
-

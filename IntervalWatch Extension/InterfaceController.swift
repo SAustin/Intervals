@@ -25,26 +25,10 @@ class InterfaceController: WKInterfaceController
     var userRunTime: NSTimeInterval = kDefaultRunTime
     var userWalkTime: NSTimeInterval = kDefaultWalkTime
     
-    var session: WCSession? {
-        didSet {
-            if let session = session
-            {
-                session.delegate = self
-                session.activateSession()
-            }
-        }
-    }
-
-    
     override func awakeWithContext(context: AnyObject?)
     {
         super.awakeWithContext(context)
         
-        if WCSession.isSupported()
-        {
-            session = WCSession.defaultSession()
-        }
-
         // Configure interface objects here.
         createPickerArrays()
         
@@ -138,9 +122,4 @@ class InterfaceController: WKInterfaceController
         userWalkTime = userWalkTime - currentWalkSeconds + Double(index)
     }
 
-}
-
-extension InterfaceController: WCSessionDelegate
-{
-    
 }
